@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/nextjs_jest_typescript_template.iml" filepath="$PROJECT_DIR$/.idea/nextjs_jest_typescript_template.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/nextjs-pocket-app.iml" filepath="$PROJECT_DIR$/.idea/nextjs-pocket-app.iml" />
     </modules>
   </component>
 </project>

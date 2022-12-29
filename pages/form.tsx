@@ -1,7 +1,7 @@
-import Form from "@/components/Common/Form/Form";
-import BackButton from "@/components/Common/Button/BackButton";
-import Button from "@/components/Common/Button/Button";
-import Input from "@/components/Common/Form/Input";
+import Form from "../client/components/Common/Form/Form";
+import BackButton from "../client/components/Common/Button/BackButton";
+import Button from "../client/components/Common/Button/Button";
+import Input from "../client/components/Common/Form/Input";
 import { useState } from "react";
 
 const initialForm = {

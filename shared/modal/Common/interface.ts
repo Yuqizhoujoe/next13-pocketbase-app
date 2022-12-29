@@ -52,8 +52,9 @@ export interface TableInterface {
 }
 
 export interface TableItemInterface {
-  text: string;
+  text?: string;
   type?: string;
+  renderItem?: () => any;
   onClick?: () => any;
   imageUrl?: string;
   imageCss?: string;
@@ -91,12 +92,18 @@ export interface AlertInterface {
   message: string;
 }
 
-export interface CampaignCard {
+export interface CardInterface {
   label: string;
   cardDivCss?: string;
-  description?: string;
+  description?: string | number;
   actionLabel?: string;
   onClick?: () => any;
+  renderActionItem?: () => any;
+  to?: string;
+  imageUrl?: string;
+  price?: number;
+  imageCardContentDivCss?: string;
+  cardActionItemDivCss?: string;
 }
 
 export interface BackButtonInterface {

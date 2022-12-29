@@ -1,20 +1,12 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import {
+  ApiMethodHandlers,
   ErrorOptionInterface,
   ResponseInterface,
 } from "../shared/modal/api/interface";
 import { HTTP_CODES } from "../shared/common/constant";
 
-export const ContractErrorMessages = {
-  CAMPAIGN_ADDRESS_NOT_FOUND: "CAMPAIGN ADDRESS NOT FOUND",
-  MISSING_ACCOUNT: "MISSING ACCOUNT",
-  MISSING_NAME: "MISSING NAME",
-  MISSING_CONTRIBUTION: "MISSING CONTRIBUTION",
-};
-
-export const ContractError = {
-  MISSING: "MISSING",
-};
+import createHttpError from "http-errors";
 
 export const CommonError = {
   METHOD_NOT_ALLOW: "METHOD_NOT_ALLOW",
@@ -75,8 +67,26 @@ export const errorHandler = (
       res.status(HTTP_CODES.NOT_FOUND).json(response);
       break;
 
-    case ContractError.MISSING:
     default:
       res.status(HTTP_CODES.SOMETHING_WENT_WRONG).json(response);
+  }
+};
+
+export const newErrorHandler = (err: unknown, res: NextApiResponse) => {
+  // errors with statusCode >= 500 should not be exposed
+  if (createHttpError.isHttpError(err) && err.expose) {
+    // handle all error thrown by http-errors module
+    return res.status(err.statusCode).json({
+      error: {
+        message: err.message,
+      },
+    });
+  } else {
+    //default to 500 server error
+    console.error(err);
+    return res.status(500).json({
+      error: { message: "Internal Server Error", err },
+      status: createHttpError.isHttpError(err) ? err.statusCode : 500,
+    });
   }
 };

@@ -1,21 +1,17 @@
-import { GetServerSideProps, GetServerSidePropsContext } from "next";
-import { useFetchSample } from "../client/apis/sample";
-import { useEffect } from "react";
-import TableIcon from "@/components/Common/Icon/TableIcon";
-import FormIcon from "@/components/Common/Icon/FormIcon";
+import { GetServerSidePropsContext } from "next";
+import TableIcon from "../client/components/Common/Icon/TableIcon";
+import FormIcon from "../client/components/Common/Icon/FormIcon";
 import Link from "next/link";
+import { CampaignInterface } from "../shared/modal/data/interface";
+import { fetchAllCampaigns } from "../server/pb/query/campaigns";
+import { parseJSONAPIObject } from "../lib/helper";
+import Campaigns from "../client/components/campaign/Campaigns";
 
-export default function Home({ sampleData }: { sampleData: string }) {
-  const { data, error } = useFetchSample();
-
-  useEffect(() => {
-    console.log(sampleData);
-  }, []);
-
-  useEffect(() => {
-    console.log(data);
-  }, [data]);
-
+export default function Home({
+  campaigns,
+}: {
+  campaigns: CampaignInterface[];
+}) {
   const renderDemoLink = () => {
     return (
       <div className="w-48 text-gray-900 bg-white rounded-lg border border-gray-200 dark:bg-gray-700 dark:border-gray-600 dark:text-white">
@@ -41,17 +37,22 @@ export default function Home({ sampleData }: { sampleData: string }) {
     );
   };
 
-  return <div className="h-screen">{renderDemoLink()}</div>;
+  return (
+    <div className="h-screen">
+      <Campaigns campaigns={campaigns} />
+    </div>
+  );
 }
 
-// @ts-ignore
-export const getServerSideProps: GetServerSideProps = async (
-  context: GetServerSidePropsContext
-) => {
-  const sampleData = "Sample";
+export async function getStaticProps(context: GetServerSidePropsContext) {
+  console.log("Home page");
+  const response = await fetchAllCampaigns();
+  const campaigns = parseJSONAPIObject(response);
+  console.log("campaigns response", campaigns);
+
   return {
     props: {
-      sampleData,
+      campaigns,
     },
   };
-};
+}

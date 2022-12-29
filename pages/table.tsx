@@ -1,12 +1,10 @@
-import Table from "@/components/Common/Table/Table";
-import TableRow from "@/components/Common/Table/TableRow";
-import TableItem from "@/components/Common/Table/TableItem";
+import Table from "../client/components/Common/Table/Table";
+import TableRow from "../client/components/Common/Table/TableRow";
+import TableItem from "../client/components/Common/Table/TableItem";
 import { TABLE_CELL_TYPE } from "../shared/common/constant";
-import { diceBearAvatar } from "../client/apis/diceBear";
-import BackButton from "@/components/Common/Button/BackButton";
+import BackButton from "../client/components/Common/Button/BackButton";
 
 const TableHeaderRow = [
-  { colName: "" },
   { colName: "Name" },
   { colName: "Age" },
   { colName: "Asset" },
@@ -39,12 +37,6 @@ export default function () {
     return dummyTableData.map((row, index) => {
       return (
         <TableRow key={index}>
-          <TableItem
-            text="Request Random Avatar"
-            type={TABLE_CELL_TYPE.IMAGE_CELL}
-            imageUrl={diceBearAvatar()}
-            imageCss="h-8"
-          />
           <TableItem text={row.name} type={TABLE_CELL_TYPE.ROW_HEADER} />
           <TableItem text={row.age.toString()} />
           <TableItem text={row.asset.toString()} />
