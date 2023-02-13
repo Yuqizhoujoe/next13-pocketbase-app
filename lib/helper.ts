@@ -32,10 +32,23 @@ export const isValidUrl = (urlString: string) => {
   }
 };
 
-export const isNFTCampaignRoute = (pathname: string) => {
-  return pathname.includes("/nfts/campaign");
-};
-
 export const isNFTRoute = (pathname: string) => {
   return pathname.includes("/nfts");
+};
+
+export const isHomePage = (pathname: string) => {
+  return pathname.includes("/");
+};
+
+export const extractImageType = (type: string) => {
+  const [, imageType] = type.split("image/");
+  return imageType;
+};
+
+export const convertObjToFormData = (obj: { [key: string]: any }) => {
+  const formData = new FormData();
+  Object.entries(obj).forEach(([key, value]) => {
+    formData.append(key, value);
+  });
+  return formData;
 };

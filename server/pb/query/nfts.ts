@@ -1,8 +1,9 @@
 import pb from "../pb";
-import { NFTFormInterface } from "../../../shared/modal/data/interface";
-import { updateCampaign } from "./campaigns";
+import {
+  NFTFormInterface,
+  NFTInterface,
+} from "../../../shared/modal/data/interface";
 import { parseJSONAPIObject } from "../../../lib/helper";
-import _ from "lodash";
 
 const collection = pb.collection("nfts");
 
@@ -19,12 +20,11 @@ export const fetchNFTById = async (id: string, options?: any) => {
 
 export const updateNFTById = async (
   id: string,
-  data: { nftForm: NFTFormInterface; campaignId: string },
+  data: { nftForm: NFTFormInterface | NFTInterface },
   options?: any
 ) => {
   const nftPayload = {
     ...data.nftForm,
-    campaign: data.campaignId,
   };
   return collection.update(id, nftPayload, {
     expand: options,
@@ -32,26 +32,20 @@ export const updateNFTById = async (
 };
 
 export const createNFT = async (
-  data: { nftForm: NFTFormInterface; campaignId: string },
+  data: { nftForm: NFTFormInterface },
   options?: any
 ) => {
   const nftPayload = {
     ...data.nftForm,
-    campaign: data.campaignId,
   };
   const createNFTResponse = await collection.create(nftPayload, {
     expand: options,
   });
 
-  console.log(createNFTResponse);
-  const createdNFT = parseJSONAPIObject(createNFTResponse);
-  const nftId = _.get(createdNFT, "id", "");
-  const existedNFTIds = _.get(createdNFT, "expand.campaign.nfts", []);
+  return parseJSONAPIObject(createNFTResponse);
+};
 
-  return updateCampaign({
-    campaignId: data.campaignId,
-    data: {
-      nftIds: [...existedNFTIds, nftId],
-    },
-  });
+export const deleteNFT = async (nftId: string, options?: any) => {
+  const deleteNFTResponse = await collection.delete(nftId);
+  return parseJSONAPIObject(deleteNFTResponse);
 };

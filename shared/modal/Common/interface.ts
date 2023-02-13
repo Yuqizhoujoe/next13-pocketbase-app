@@ -1,5 +1,6 @@
 import { GridColDef } from "@mui/x-data-grid";
 import { HTMLInputTypeAttribute } from "react";
+import { NFTInterface } from "../data/interface";
 
 export interface InputInterface {
   initialValue?: any;
@@ -16,6 +17,7 @@ export interface InputInterface {
   handleChange?: (value: any, valid: boolean) => any;
   validate?: (value: any) => boolean;
   rows?: number;
+  placeholder?: string;
 }
 
 export interface ButtonInterface {
@@ -106,8 +108,13 @@ export interface CardInterface {
   cardActionItemDivCss?: string;
 }
 
-export interface BackButtonInterface {
-  onClick: () => any;
+export interface ImageCardInterface extends CardInterface {
+  imageUrl: string;
+  to: string;
+  imageHeight: string | number;
+  imageWidth?: string | number;
+  onImageError?: () => any;
+  nft?: NFTInterface;
 }
 
 export interface IconInterface {

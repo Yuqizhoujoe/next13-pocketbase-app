@@ -1,14 +1,14 @@
-import { GetServerSidePropsContext } from "next";
+import { GetServerSideProps, GetServerSidePropsContext } from "next";
 import _ from "lodash";
 import { fetchNFTById } from "../../../server/pb/query/nfts";
 import { parseJSONAPIObject } from "../../../lib/helper";
 import { NFTInterface } from "../../../shared/modal/data/interface";
-import NFT from "../../../client/components/nft/NFT";
+import CreateEditNFT from "../../../client/components/nft/CreateEditNFT";
 
-export default function NFTContainer({ nft }: { nft: NFTInterface }) {
+export default function EditNFT({ nft }: { nft: NFTInterface }) {
   return (
-    <div className="nft_page w-full min-h-screen max-h-fit">
-      <NFT nft={nft} />
+    <div className="edit_nft_page w-full min-h-screen max-h-fit">
+      <CreateEditNFT nft={nft} />
     </div>
   );
 }
@@ -19,8 +19,6 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   const nft = parseJSONAPIObject(nftResponse);
 
   return {
-    props: {
-      nft,
-    },
+    props: { nft },
   };
 }

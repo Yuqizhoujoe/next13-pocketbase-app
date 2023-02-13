@@ -1,0 +1,9 @@
+module.exports = {
+  env: {
+    POCKETBASE_CREDENTIAL_PROVIDER: "pocketbase",
+    OPENAI_API_KEY: "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",
+    AWS_S3_USER_ACCESS_KEY: "AKIAXBZAWPKSWDZMLYWP",
+    AWS_S3_USER_SECRET_KEY: "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",
+    AWS_S3_BUCKET_NAME: "nextjs-s3-bucket",
+  },
+};

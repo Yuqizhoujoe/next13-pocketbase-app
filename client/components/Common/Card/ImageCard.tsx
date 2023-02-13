@@ -1,16 +1,13 @@
-import { CardInterface } from "../../../../shared/modal/Common/interface";
+import { ImageCardInterface } from "../../../../shared/modal/Common/interface";
 import { formatCurrency, handleCss } from "../../../../lib/helper";
-import Link from "next/link";
+import Image from "../Image";
+import { cardStyle } from "../../../../shared/common/cssConstants";
 
-const defaultCardDivCSS =
-  "card flex flex-row p-4 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700";
+const defaultCardDivCSS = cardStyle.CardContainer;
 
-const ImageCard = (props: CardInterface) => {
+const ImageCard = (props: ImageCardInterface) => {
   const {
     label,
-    description,
-    onClick,
-    actionLabel,
     cardDivCss,
     renderActionItem,
     to,
@@ -18,6 +15,9 @@ const ImageCard = (props: CardInterface) => {
     price,
     imageCardContentDivCss,
     cardActionItemDivCss,
+    imageWidth,
+    imageHeight,
+    nft,
   } = props;
 
   const renderImageCardActionContent = () => {
@@ -43,14 +43,14 @@ const ImageCard = (props: CardInterface) => {
           {label}
         </h5>
         <div className="w-full h-full overflow-hidden flex justify-center">
-          {/*@ts-ignore*/}
-          <Link href={to}>
-            <img
-              className="h-44 w-full rounded-lg hover:cursor-pointer hover:opacity-75 hover:scale-90"
-              src={imageUrl}
-              alt={label}
-            />
-          </Link>
+          <Image
+            nft={nft}
+            imageUrl={imageUrl}
+            alt={label}
+            height={imageHeight}
+            width={imageWidth}
+            to={to}
+          />
         </div>
         <span className="text-3xl font-bold mt-3 dark:text-white">
           {formatCurrency(price)}

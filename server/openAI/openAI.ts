@@ -1,4 +1,8 @@
 import { Configuration, OpenAIApi } from "openai";
+import _ from "lodash";
+import axios from "axios";
+import { NFTInterface } from "../../shared/modal/data/interface";
+import { updateNFTById } from "../pb/query/nfts";
 
 const configuration = new Configuration({
   apiKey: process.env.OPENAI_API_KEY,
@@ -11,5 +15,6 @@ export async function generateImage(prompt: string) {
     n: 1,
     size: "1024x1024",
   });
-  return response;
+  const data = _.get(response, "data", {});
+  return data;
 }

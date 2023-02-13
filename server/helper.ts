@@ -3,6 +3,8 @@ import { NextApiRequest, NextApiResponse } from "next";
 import createHttpError from "http-errors";
 import { newErrorHandler } from "./errorHandling";
 import { runCorsMiddleware } from "./interceptor";
+import nextConnect, { NextConnect } from "next-connect";
+import cors from "cors";
 
 export function apiHandler(handler: ApiMethodHandlers) {
   return async (req: NextApiRequest, res: NextApiResponse) => {
@@ -31,4 +33,21 @@ export function apiHandler(handler: ApiMethodHandlers) {
       newErrorHandler(err, res);
     }
   };
+}
+export function nextConnectConfig(): NextConnect<
+  NextApiRequest,
+  NextApiResponse
+> {
+  const apiRoute = nextConnect({
+    onError(error, req: NextApiRequest, res: NextApiResponse) {
+      res
+        .status(501)
+        .json({ error: `Sorry something Happened! ${error.message}` });
+    },
+    onNoMatch(req, res) {
+      res.status(405).json({ error: `Method '${req.method}' Not Allowed` });
+    },
+  });
+  apiRoute.use(cors());
+  return apiRoute;
 }

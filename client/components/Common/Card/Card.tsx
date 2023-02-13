@@ -1,19 +1,12 @@
 import { CardInterface } from "../../../../shared/modal/Common/interface";
 import Button from "../Button/Button";
 import { handleCss } from "../../../../lib/helper";
+import { cardStyle } from "../../../../shared/common/cssConstants";
 
-const defaultCardDivCSS =
-  "card flex flex-row p-6 bg-white rounded-lg border border-gray-200 shadow-md dark:bg-gray-800 dark:border-gray-700";
+const defaultCardDivCSS = cardStyle.CardContainer;
 
 const Card = (props: CardInterface) => {
-  const {
-    label,
-    description,
-    onClick,
-    actionLabel,
-    cardDivCss,
-    renderActionItem,
-  } = props;
+  const { label, description, cardDivCss, renderActionItem } = props;
 
   const renderCardActionContent = () => {
     if (!renderActionItem || typeof renderActionItem !== "function")

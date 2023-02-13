@@ -1,5 +1,5 @@
 import Cors from "cors";
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextApiHandler, NextApiRequest, NextApiResponse } from "next";
 import NextCors from "nextjs-cors";
 
 // CORS Solution 1

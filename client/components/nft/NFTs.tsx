@@ -10,6 +10,8 @@ export default function NFTs(props: { nfts: NFTInterface[] }) {
       return (
         <div key={nft.id} className="nft_image_card_container">
           <ImageCard
+            imageHeight="h-96"
+            imageWidth="w-full"
             label={nft.name}
             price={nft.price}
             imageUrl={nft.imageUrl}
